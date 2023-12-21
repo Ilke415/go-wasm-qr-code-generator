@@ -1,0 +1,1 @@
+# go-wasm-qr-code-generator
