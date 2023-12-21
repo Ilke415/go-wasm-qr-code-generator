@@ -21,6 +21,8 @@ page 50100 "STI QR Code Generator"
                 {
                     ApplicationArea = All;
                     Caption = 'Size';
+                    MaxValue = 400;
+                    MinValue = 1;
                     ToolTip = 'Specifies the value of the Size field.';
                 }
                 usercontrol(QRCodeGenerator; "STI QR Code Generator")
@@ -38,17 +40,19 @@ page 50100 "STI QR Code Generator"
 
     actions
     {
-        area(Processing)
+        area(Creation)
         {
             action("Data Creation")
             {
                 ApplicationArea = All;
-                Image = BarCode;
                 Caption = 'Generate QR Code';
+                Image = BarCode;
                 ToolTip = 'Executes the Generate QR Code action.';
+                PromotedCategory = Process;
+                Promoted = true;
+                PromotedIsBig = true;
+
                 trigger OnAction()
-                var
-                    Result: Text;
                 begin
                     if DataToEncode = '' then
                         exit;
@@ -56,16 +60,20 @@ page 50100 "STI QR Code Generator"
                     if Size <= 0 then
                         exit;
 
-                    Result := QRCodeGenerator.GenerateQRCode(DataToEncode, Size);
-
-                    Message(Result);
+                    QRCodeGenerator.GenerateQRCode(DataToEncode, Size);
                 end;
             }
         }
     }
 
+    trigger OnOpenPage()
+    begin
+        DataToEncode := 'https://';
+        Size := 250;
+    end;
+
     var
         QRCodeGenerator: Codeunit "STI QR Code Generator";
-        DataToEncode: Text;
         Size: Integer;
+        DataToEncode: Text;
 }
