@@ -1,0 +1,1 @@
+$Env:GOOS = "js"; $Env:GOARCH = "wasm"; go build -o ../assets/qr-code-gen-lib.wasm
